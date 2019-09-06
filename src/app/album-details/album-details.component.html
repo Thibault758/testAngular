@@ -1,0 +1,13 @@
+<div *ngIf="album">
+    <p>{{album.title}}</p>
+    <p>{{album.name}}</p>
+
+    <ul *ngIf="albumList">
+        <li  *ngFor="let morceau of albumList">
+            <p>{{ morceau }}</p>
+        </li>
+    </ul>
+    <button (click)="shuffle()">Shuffle</button>
+    <button (click)="play(album)">Play ></button>
+    <!-- TODO afficher les morceaux de l'album-->
+</div>
