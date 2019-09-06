@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter  } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, OnChanges, SimpleChanges  } from '@angular/core';
 import { AlbumService } from '../album.service';
 import { ALBUMS } from '../mock-albums';
 import { Album } from '../album'; // def du type;
@@ -12,6 +12,8 @@ import { environment } from '../../environments/environment';
 export class PaginateComponent implements OnInit {
 
   @Output()  albumsPaginated: EventEmitter<Album[]> = new EventEmitter();
+  @Input() albumStatistics : Album[];
+  albumsToPaginate : Album[];
   nbPage : number;
   pagination : number;
   pages : number[] = [];
@@ -28,7 +30,20 @@ export class PaginateComponent implements OnInit {
     for (let i = 1; i <= this.pagination; i ++){
       this.pages.push(i - 1);
     }
-    this.albumsPaginated.emit(this.albumS.getAlbums().slice(0, environment.paginate)); // emettre les album vers le parent’
+    if(this.albumStatistics) {
+      this.albumsToPaginate = this.albumStatistics
+      this.albumsPaginated.emit(this.albumsToPaginate.slice(0, environment.paginate))
+    }
+    else {
+      this.albumsToPaginate = this.albumS.getAlbums();
+      this.albumsPaginated.emit(this.albumsToPaginate.slice(0, environment.paginate)); // emettre les album vers le parent’
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.albumsToPaginate = this.albumStatistics;
+    console.log('hello')
+    this.albumsPaginated.emit(this.albumsToPaginate.slice(0, environment.paginate))
   }
 
   paginate(action : string, idPage? : string) {
@@ -51,5 +66,10 @@ export class PaginateComponent implements OnInit {
       this.albumsPaginated.emit(this.albumS.getAlbums().slice(start, end)); // emettre les album vers le parent’
       this.albumS.currentPage(this.actualyPage); // on informe les autres paginate component du changement de page:
     }
+  }
+
+  albumsStatisticsNewOrder(event) {
+    this.albumsToPaginate = event;
+    this.albumsPaginated.emit(this.albumsToPaginate.slice(0, environment.paginate))
   }
 }

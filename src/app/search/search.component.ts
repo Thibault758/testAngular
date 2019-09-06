@@ -27,7 +27,6 @@ export class SearchComponent implements OnInit {
       let resultByTitle = this.albumS.searchTitle($letter);
       this.onSearchByTitle.emit(resultByTitle); // emettre un album vers le parent
     }
-
   }
 
   onSubmit(formSearch : NgForm) {

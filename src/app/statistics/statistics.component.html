@@ -1,0 +1,33 @@
+<h1>Page de statistiques</h1>
+
+<app-paginate [albumStatistics]="albumStatistics" (albumsPaginated)="onAlbumsPaginatedParent($event)"></app-paginate>
+
+<button (click)="sortByAverage('asc')" class="col-md-12 center-block">Moyenne (ASC)</button>
+<button (click)="sortByAverage('desc')" class="col-md-12 center-block">Moyenne (DESC)</button>
+
+<ul *ngIf="albums" class="list-inline">
+    <li class="list-inline-item" *ngFor="let album of albums">
+
+            <div class="card">
+                    <div class="card-header">
+                            <a
+                            routerLink="/album/{{album.id}}"
+                            >
+                            Nom de l'album: {{ album.title }}
+                        </a>
+                    </div>
+                    <div class="card-body">
+            
+                        <p class="card-text">Moyenne de l'album: {{ album.average }}</p>
+                        <p class="card-text">Position de l'album: {{ album.position}}</p>
+                        <a class="btn btn-outline-primary" href="#" role="button">fr</a>
+                       
+                    </div>
+                    <button (click)="onSelect(album)">Details</button>
+                    
+                    <h1 *ngIf="albumPlay && albumPlay.id === album.id">ON AIR</h1>
+            </div><!-- .card -->
+    </li>
+</ul>
+
+<app-paginate (albumsPaginated)="onAlbumsPaginatedParent($event)"></app-paginate>

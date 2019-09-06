@@ -12,27 +12,7 @@ import { SearchComponent } from './search/search.component';
 import { LoginComponent } from './login/login.component';
 import { AlbumDescriptionComponent } from './album-description/album-description.component';
 import { PaginateComponent } from './paginate/paginate.component';
-
-//constante pour les routes
-const albumsRoutes: Routes = [
-  {
-    path: 'albums',
-    component: AlbumsComponent
-  },
-  {
-    path: '',
-    redirectTo:'/albums',
-    pathMatch: 'full'
-  },
-  {
-    path: 'login',
-    component: LoginComponent
-  },
-  {
-    path: 'album/:id',
-    component: AlbumDescriptionComponent,
-  },
-];
+import { StatisticsComponent } from './statistics/statistics.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +23,7 @@ const albumsRoutes: Routes = [
     LoginComponent,
     AlbumDescriptionComponent,
     PaginateComponent,
+    StatisticsComponent,
   ],
   imports: [
     BrowserModule,
